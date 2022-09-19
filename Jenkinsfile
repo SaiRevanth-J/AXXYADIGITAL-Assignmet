@@ -5,7 +5,7 @@ pipeline {
         stage {
             steps (build)
              {
-               sh ' docker built -t revanthkumar9/nodeapp'
+               sh ' docker build -t revanthkumar9/nodeapp .'
 
              }
         }
@@ -26,7 +26,8 @@ pipeline {
 
         stage {
             steps (deploy) {
-                sh 'scp -o StrictHostKeyChecking=no nodeappdeploy.yml nodeportservice.yaml  nginx-ingress.yml k8cluster@ipaddress:/tmp
+                sh 'scp -o StrictHostKeyChecking=no nodeappdeploy.yml nodeportservice.yaml  nginx-ingress.yml k8cluster@ipaddress:/tmp '
+                sh 'ssh -o StrictHostKeyChecking=no k8cluster@ipaddress '
                 sh ' kubectl apply -f ./tmp/nodeappdeploy.yml '
                 sh ' kubectl apply -f ./tmp/nodeportservice.yaml  '
                 sh ' kubectl apply -f ./tmp/nginx-ingress.yml '
