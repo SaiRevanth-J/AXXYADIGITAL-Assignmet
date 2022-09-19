@@ -26,8 +26,11 @@ pipeline {
 
         stage {
             steps (deploy) {
-                sh 'scp -o StrictHostKeyChecking=no nodeapp-pod.yaml  k8cluster@ipaddress:/tmp
-                sh ' kubectl apply -f ./tmp/nodeapp-pod.yaml '
+                sh 'scp -o StrictHostKeyChecking=no nodeappdeploy.yml nodeportservice.yaml  nginx-ingress.yml k8cluster@ipaddress:/tmp
+                sh ' kubectl apply -f ./tmp/nodeappdeploy.yml '
+                sh ' kubectl apply -f ./tmp/nodeportservice.yaml  '
+                sh ' kubectl apply -f ./tmp/nginx-ingress.yml '
+
             }
         }
 
