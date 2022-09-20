@@ -2,6 +2,10 @@ pipeline {
     agent any 
 
     stages {
+         stage{
+            steps("git checkout") {
+                 git 'https://github.com/SaiRevanth-J/AXXYADIGITAL-Assignmet.git'
+        }
         stage {
             steps (build)
              {
