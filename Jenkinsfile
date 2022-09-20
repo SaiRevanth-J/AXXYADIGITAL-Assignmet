@@ -10,7 +10,7 @@ pipeline {
         stage  ("build") {
             steps
              {
-               sh ' docker build -t revanthkumar9/nodeapp .'
+               sh ' sudo docker build -t revanthkumar9/nodeapp .'
 
              }
         }
@@ -24,8 +24,8 @@ pipeline {
 
             steps
             {
-                sh ' docker login -u revanthkumar9 -p xxxxxxx'
-                sh ' docker push revanthkumar9/nodeapp '
+                sh ' sudo  docker login -u revanthkumar9 -p xxxxxxx'
+                sh ' sudo docker push revanthkumar9/nodeapp '
             }
         }
 
