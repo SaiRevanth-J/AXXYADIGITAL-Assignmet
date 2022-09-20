@@ -2,35 +2,35 @@ pipeline {
     agent any 
 
     stages {
-         stage{
-            steps("git checkout") {
+         stage ("git checkout") {
+            steps {
                  git 'https://github.com/SaiRevanth-J/AXXYADIGITAL-Assignmet.git'
         }
          }
-        stage {
-            steps ("build")
+        stage  ("build") {
+            steps
              {
                sh ' docker build -t revanthkumar9/nodeapp .'
 
              }
         }
-        stage {
-            steps ("scan") {
+        stage ("scan") {
+            steps  {
                 sh ' trivy revanthkumar9/nodeapp'
             } 
         }
 
-        stage {
+        stage  ("dockerhub") {
 
-            steps("dockerhub")
+            steps
             {
                 sh ' docker login -u revanthkumar9 -p xxxxxxx'
                 sh ' docker push revanthkumar9/nodeapp '
             }
         }
 
-        stage {
-            steps ("deploy") {
+        stage ("deploy") {
+            steps  {
                 sh 'scp -o StrictHostKeyChecking=no nodeappdeploy.yml nodeportservice.yaml  nginx-ingress.yml k8cluster@ipaddress:/tmp '
                 sh 'ssh -o StrictHostKeyChecking=no k8cluster@ipaddress '
                 sh ' kubectl apply -f ./tmp/nodeappdeploy.yml '
